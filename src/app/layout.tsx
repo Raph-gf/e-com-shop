@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`text-sm text-white bg-[#F5F5F5] min-h-screen w-screen ${jetBrains_Mono.variable} antialiased`}
+        className={`text-sm text-white  bg-neutral-50 min-h-screen w-screen ${jetBrains_Mono.variable} antialiased`}
       >
         {children}
       </body>

@@ -4,7 +4,7 @@ export default function Hero() {
       <div className="flex flex-col items-center gap-2 text-7xl">
         <span>Make Your Interior More</span>
         <span>Minimalist & Modern</span>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col text-center">
           <span className="text-lg">Turn your room into a lot more minimalist</span>
           <span className="text-lg">and modern with ease and speed</span>
         </div>
