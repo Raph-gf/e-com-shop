@@ -1,3 +1,4 @@
+import Carrousel from "@/components/home-carrousel";
 import GridSection from "@/components/grid-section";
 import Hero from "@/components/hero";
 import Navbar from "@/components/navbar";
@@ -44,6 +45,8 @@ export default function HomePage() {
       <section className="flex flex-col items-center mt-[170px] text-4xl font-bold pt-6 px-5 text-black bg-[#F7F7F7]">
         <h1 className="mt-[50px]">Best Selling Product</h1>
         <SelectionBtn />
+        <div className="mt-[80px]"></div>
+        <Carrousel />
       </section>
     </main>
   );
