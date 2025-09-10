@@ -1,6 +1,6 @@
-import Carrousel from "./best-selling-carrousel";
-import LinkButton from "./link-button";
-import SelectionBtn from "./selection-btn";
+import Carrousel from "../best-selling-carrousel";
+import LinkButton from "../link-button";
+import SelectionBtn from "../selection-btn";
 
 export default function BestSellingSection() {
   return (

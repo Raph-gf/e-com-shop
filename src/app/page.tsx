@@ -1,10 +1,10 @@
-import HeroSection from "@/components/hero-section";
-import WhySection from "@/components/why-section";
-import BestSellingSection from "@/components/best-selling-section";
-import ExperienceSection from "@/components/experience-section";
-import MaterialSection from "@/components/material-section";
-import TestimonialSection from "@/components/testimonial-section";
-import FooterSection from "@/components/footer-section";
+import BestSellingSection from "@/components/homapage-components/best-selling-section";
+import ExperienceSection from "@/components/homapage-components/experience-section";
+import FooterSection from "@/components/homapage-components/footer-section";
+import HeroSection from "@/components/homapage-components/hero-section";
+import MaterialSection from "@/components/homapage-components/material-section";
+import TestimonialSection from "@/components/homapage-components/testimonial-section";
+import WhySection from "@/components/homapage-components/why-section";
 
 export default function HomePage() {
   return (

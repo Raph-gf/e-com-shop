@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Hero from "./hero";
-import Navbar from "./navbar";
+import Hero from "../hero";
+import Navbar from "../navbar";
 
 export default function HeroSection() {
   return (

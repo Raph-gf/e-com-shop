@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LinkButton from "./link-button";
+import LinkButton from "../link-button";
 
 export default function MaterialSection() {
   return (

@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 export default function FooterSection() {
   return (
     <footer className="mt-[230px]  px-[186px] text-black w-full bg-[#F7F7F7]">

@@ -1,4 +1,4 @@
-import GridSection from "./grid-section";
+import GridSection from "../grid-section";
 
 export default function WhySection() {
   return (
