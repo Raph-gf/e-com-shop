@@ -50,16 +50,16 @@ export default function Carrousel() {
   return (
     <Carousel>
       <CarouselContent>
-        <CarouselItem className="basis-1/3 pl-5">
+        <CarouselItem className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-5">
           <ProductCard />
         </CarouselItem>
-        <CarouselItem className="basis-1/3 pl-5">
+        <CarouselItem className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-5">
           <ProductCard />
         </CarouselItem>
-        <CarouselItem className="basis-1/3 pl-5">
+        <CarouselItem className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-5">
           <ProductCard />
         </CarouselItem>
-        <CarouselItem className="basis-1/3 pl-5">
+        <CarouselItem className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pl-5">
           <ProductCard />
         </CarouselItem>
       </CarouselContent>
