@@ -1,10 +1,11 @@
-import Carrousel from "@/components/home-carrousel";
+import Carrousel from "@/components/best-selling-carrousel";
 import GridSection from "@/components/grid-section";
 import Hero from "@/components/hero";
 import Navbar from "@/components/navbar";
 import SelectionBtn from "@/components/selection-btn";
 import Image from "next/image";
 import LinkButton from "@/components/link-button";
+import TestimonialCarrousel from "@/components/testimonial-carrousel";
 
 export default function HomePage() {
   return (
@@ -84,7 +85,7 @@ export default function HomePage() {
           <h1 className="text-[42px] font-bold">
             Very Serious Materials For Making Furniture
           </h1>
-          <p className="text-base/8 mb-5">
+          <p className="text-base/8 ">
             Because panto was very serious about designing furniture for our environment,
             using a very expensive and famous capital but at a relatively low price
           </p>
@@ -121,6 +122,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <section className="flex flex-col items-center mt-[170px] pt-6 px-5 text-black bg-[#F7F7F7]">
+        <h2 className="text-orange-400 text-[18px] mb-5 tracking-widest">TESTIMONIAL</h2>
+        <h1 className="text-[42px] font-bold mb-[60px]">Our Client Reviews</h1>
+        <div className="flex items-center">
+          <TestimonialCarrousel />
+        </div>
+      </section>
+
+      <footer></footer>
     </main>
   );
 }
