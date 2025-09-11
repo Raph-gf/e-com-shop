@@ -22,7 +22,7 @@ export default function SelectionBtn() {
           <Button
             variant="ghost"
             onClick={() => setSelected(item)}
-            className="text-sm text-black rounded-3xl w-[84px] h-[40px] relative z-10 hover:bg-transparent"
+            className=" flex text-sm text-black rounded-3xl w-[84px] h-[40px] items-center relative z-10 hover:bg-transparent"
           >
             {item}
           </Button>
