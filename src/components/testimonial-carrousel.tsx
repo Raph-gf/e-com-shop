@@ -29,7 +29,10 @@ function TestimonialCard() {
           <div className=" -translate-y-6">
             <div className="relative h-15 w-15 rounded-full ring-8 ring-white bg-yellow-400 overflow-hidden">
               <Avatar className="h-full w-full">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="avatar profile image"
+                />
                 <AvatarFallback>BU</AvatarFallback>
               </Avatar>
             </div>
