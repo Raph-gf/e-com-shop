@@ -1,24 +1,34 @@
-import CataloguePageHero from "@/components/catalogue-components/productpage-hero";
-import { TestimonialCard } from "@/components/testimonial-carrousel";
+"use client";
+
+import CatalogueCard from "@/components/catalogue-components/catalogue-card";
+import CataloguePageHero from "@/components/catalogue-components/catalogue-hero";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { motion } from "motion/react";
 import Image from "next/image";
 
 export default function CataloguePage() {
   return (
     <main>
-      <section className="w-full relative h-screen">
-        <Image
-          src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=3058&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="landing page background image"
-          fill
-          className="z-0 object-cover"
-          priority
-        />
-        <CataloguePageHero />
-      </section>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <section className="w-full relative h-screen">
+          <Image
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=3058&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="landing page background image"
+            fill
+            className="z-0 object-cover"
+            priority
+          />
+          <CataloguePageHero />
+        </section>
+      </motion.div>
 
-      <section className="mt-5 px-5 text-black">
-        <h1 className="text-[30px] mb-5 text-center">Our Collection of Product</h1>
+      <section className="mt-10 px-5 text-black">
+        <h1 className="text-[70px]  mb-5 text-center">Our Collection of Product</h1>
         <div className="flex justify-center">
           <Input className="w-full max-w-[950px] rounded-2xl" placeholder="Search..." />
         </div>
@@ -33,6 +43,14 @@ export default function CataloguePage() {
           </p>
         </div>
 
+        <div className="flex justify-center items-center mt-8 space-x-4 text-white">
+          <h2 className="text-black">Price range</h2>
+          <Button>$50.00 $100.00</Button>
+          <Button>$100.00 $200.00</Button>
+          <Button>$300.00 $400.00</Button>
+          <Button>+ $400.00</Button>
+        </div>
+
         <div
           className="
             mt-10
@@ -40,12 +58,23 @@ export default function CataloguePage() {
             grid-cols-1 
             sm:grid-cols-2 
             lg:grid-cols-3 
-            gap-8 
+            gap-y-8
+            gap-x-5
             justify-items-center
           "
         >
           {Array.from({ length: 9 }).map((_, index) => (
-            <TestimonialCard key={index} />
+            <div key={index}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <CatalogueCard />
+              </motion.div>
+            </div>
           ))}
         </div>
       </section>
