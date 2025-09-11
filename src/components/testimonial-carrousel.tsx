@@ -12,9 +12,9 @@ import Image from "next/image";
 import StarRating from "./star-rating";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-function TestimonialCard() {
+export function TestimonialCard() {
   return (
-    <Card className="w-[450px] h-[550px] max-w-sm shadow-xl">
+    <Card className="w-[450px] h-[550px] max-w-sm shadow-xl rounded-2xl overflow-hidden">
       <CardHeader className="h-[255px]">
         <Image
           src="https://images.unsplash.com/photo-1541533260371-b8fc9b596d84?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
