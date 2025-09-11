@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "../styles/globals.css";
+import Navbar from "@/components/navbar";
 
 const jetBrains_Mono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body
         className={`text-sm text-white  bg-neutral-50 min-h-screen w-screen ${jetBrains_Mono.variable} antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
