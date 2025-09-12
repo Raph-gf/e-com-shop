@@ -4,15 +4,18 @@ import CataloguePageHero from "@/components/catalogue-components/catalogue-hero"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { generateFakeProducts } from "@/lib/fake-data";
+import prisma from "@/lib/prisma";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 import * as motion from "motion/react-client";
 import Image from "next/image";
 
-export default function CataloguePage() {
-  const fakeProducts = generateFakeProducts(9);
+export default async function CataloguePage() {
+  const products = await prisma.product.findMany({
+    include: { images: true },
+  });
 
+  console.log(products);
   return (
     <main>
       <section>
@@ -79,7 +82,7 @@ export default function CataloguePage() {
             justify-items-center
           "
         >
-          {fakeProducts.map((product, index) => (
+          {products.map((product, index) => (
             <div key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -88,7 +91,7 @@ export default function CataloguePage() {
                 whileHover={{ scale: 1.003 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <CatalogueCard fakeproduct={product} />
+                <CatalogueCard product={product} />
               </motion.div>
             </div>
           ))}
