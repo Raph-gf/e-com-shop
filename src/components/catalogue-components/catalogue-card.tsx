@@ -18,7 +18,6 @@ export default function CatalogueCard({ product }: ProductProps) {
       <Card className="w-[400px] h-[550px] shadow-xl rounded-2xl overflow-hidden border-none">
         <div className="relative h-[450px]">
           <Image src={mainImage} alt={product.name} fill className="object-cover" />
-          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#F5F5F5] to-transparent"></div>
         </div>
         <CardContent className="px-7 py-5">
           <p className="text-lg font-bold text-black mb-5">{product.name}</p>

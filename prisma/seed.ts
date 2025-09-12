@@ -169,6 +169,10 @@ const products = [
 ];
 
 async function main() {
+  await prisma.productImage.deleteMany();
+
+  await prisma.product.deleteMany();
+
   for (const product of products) {
     await prisma.product.create({
       data: product,
