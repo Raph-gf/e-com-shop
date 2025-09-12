@@ -1,13 +1,23 @@
+"use client";
+
 import { Button } from "../ui/button";
 import * as motion from "motion/react-client";
 import CatalogueCard from "./catalogue-card";
 import { TProduct } from "@/types/product-type";
+import { useCatalogueStore } from "@/store/useCatalogueStore";
+import { useEffect } from "react";
 
 type TCatalogueGridProps = {
-  products: TProduct[];
+  initialProducts: TProduct[];
 };
 
-export default function CatalogueGrid({ products }: TCatalogueGridProps) {
+export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) {
+  const { products, setProduct } = useCatalogueStore();
+
+  useEffect(() => {
+    if (products.length === 0) setProduct(initialProducts);
+  }, [initialProducts, products, setProduct]);
+
   return (
     <>
       <div className="text-center max-w-2xl mx-auto">

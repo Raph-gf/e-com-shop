@@ -1,7 +1,7 @@
-import { Progress } from "@radix-ui/react-progress";
 import { ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import * as motion from "motion/react-client";
+import { Progress } from "../ui/progress";
 
 export default function CatalogueMoreBtn() {
   return (
