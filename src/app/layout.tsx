@@ -1,7 +1,8 @@
+import "../styles/globals.css";
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
-import "../styles/globals.css";
 import Navbar from "@/components/navbar";
+import FooterSection from "@/components/homapage-components/footer-section";
 
 const jetBrains_Mono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -26,6 +27,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <FooterSection />
       </body>
     </html>
   );

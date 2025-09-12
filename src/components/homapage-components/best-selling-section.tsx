@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Carrousel from "../best-selling-carrousel";
 import LinkButton from "../link-button";
 import SelectionBtn from "../selection-btn";
@@ -10,7 +11,9 @@ export default function BestSellingSection() {
       <div className="mt-[80px]"></div>
       <Carrousel />
       <div className="mt-[60px] mb-[50px]">
-        <LinkButton text="View All" />
+        <Link href="/products">
+          <LinkButton text="View All" />
+        </Link>
       </div>
     </section>
   );

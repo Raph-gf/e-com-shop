@@ -20,8 +20,6 @@ export default function HomePage() {
       <MaterialSection />
 
       <TestimonialSection />
-
-      <FooterSection />
     </main>
   );
 }

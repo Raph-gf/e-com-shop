@@ -1,3 +1,5 @@
+import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+
 export default function FooterSection() {
   return (
     <footer className="mt-[230px]  px-[186px] text-black w-full bg-[#F7F7F7]">
@@ -29,8 +31,14 @@ export default function FooterSection() {
           <h2 className="text-orange-400 tracking-widest mb-7">Follow us</h2>
           <ul className="space-y-4 whitespace-nowrap">
             <li>Facebook</li>
-            <li>Twitter</li>
-            <li>Instagram</li>
+            <li className="flex items-center gap-x-1">
+              <TwitterLogoIcon />
+              Twitter
+            </li>
+            <li className="flex items-center gap-x-1">
+              <InstagramLogoIcon />
+              Instagram
+            </li>
           </ul>
         </div>
       </div>
