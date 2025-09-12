@@ -1,13 +1,18 @@
 import CatalogueCard from "@/components/catalogue-components/catalogue-card";
 import CataloguePageHero from "@/components/catalogue-components/catalogue-hero";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { generateFakeProducts } from "@/lib/fake-data";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
+
 import * as motion from "motion/react-client";
 import Image from "next/image";
 
 export default function CataloguePage() {
+  const fakeProducts = generateFakeProducts(9);
+
   return (
     <main>
       <section>
@@ -74,7 +79,7 @@ export default function CataloguePage() {
             justify-items-center
           "
         >
-          {Array.from({ length: 9 }).map((_, index) => (
+          {fakeProducts.map((product, index) => (
             <div key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -83,7 +88,7 @@ export default function CataloguePage() {
                 whileHover={{ scale: 1.003 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <CatalogueCard />
+                <CatalogueCard fakeproduct={product} />
               </motion.div>
             </div>
           ))}
