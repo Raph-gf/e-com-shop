@@ -12,7 +12,7 @@ const products = [
     images: {
       create: [
         {
-          url: "https://images.unsplash.com/photo-1598300055366-c5e90b99f7b8?auto=format&fit=crop&w=400&q=80",
+          url: "https://plus.unsplash.com/premium_photo-1693252886111-7b9f89b92903?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           isMain: true,
         },
         {
@@ -30,7 +30,7 @@ const products = [
     images: {
       create: [
         {
-          url: "https://images.unsplash.com/photo-1600566754697-bab2dbf2b3ee?auto=format&fit=crop&w=400&q=80",
+          url: "https://images.unsplash.com/photo-1723627390002-e6cf868e631c?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           isMain: true,
         },
         {
