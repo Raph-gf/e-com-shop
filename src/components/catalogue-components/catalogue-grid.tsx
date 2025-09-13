@@ -12,10 +12,13 @@ type TCatalogueGridProps = {
 };
 
 export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) {
-  const { filteredProduct, products, setProduct, visibleCount, search } =
+  const { filteredProduct, products, setProduct, visibleCount, priceRange, search } =
     useCatalogueStore();
 
-  const totalItems = search !== "" ? filteredProduct.length : products.length;
+  const totalItems =
+    search || priceRange[0] > 0 || priceRange[1] < 1000
+      ? filteredProduct.length
+      : products.length;
 
   useEffect(() => {
     if (products.length === 0) {
