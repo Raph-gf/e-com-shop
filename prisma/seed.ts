@@ -166,6 +166,42 @@ const products = [
     },
     avgRating: 4.0,
   },
+  {
+    name: "Oak Dining Chair",
+    type: "Chair",
+    price: 150,
+    description: "Elegant dining chair in oak wood, minimalist design.",
+    images: {
+      create: [
+        {
+          url: "https://images.unsplash.com/photo-1701421047895-1dc3908c3268?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1701421047999-eacdc479e8bd?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+      ],
+    },
+    avgRating: 4.0,
+  },
+  {
+    name: "Oak Dining Chair",
+    type: "Chair",
+    price: 150,
+    description: "Elegant dining chair in oak wood, minimalist design.",
+    images: {
+      create: [
+        {
+          url: "https://images.unsplash.com/photo-1701421047895-1dc3908c3268?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1701421047999-eacdc479e8bd?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+      ],
+    },
+    avgRating: 4.0,
+  },
 ];
 
 async function main() {
@@ -178,7 +214,7 @@ async function main() {
       data: product,
     });
   }
-  console.log("✅ 9 products seeded with images");
+  console.log(`✅ ${products.length} products seeded with images`);
 }
 
 main()

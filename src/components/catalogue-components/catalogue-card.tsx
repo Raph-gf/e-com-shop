@@ -17,7 +17,13 @@ export default function CatalogueCard({ product }: ProductProps) {
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}>
       <Card className="w-[400px] h-[550px] shadow-xl rounded-2xl overflow-hidden border-none">
         <div className="relative h-[450px]">
-          <Image src={mainImage} alt={product.name} fill className="object-cover" />
+          <Image
+            src={mainImage}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+          />
         </div>
         <CardContent className="px-7 py-5">
           <p className="text-lg font-bold text-black mb-5">{product.name}</p>

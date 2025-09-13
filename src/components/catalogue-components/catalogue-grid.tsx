@@ -12,17 +12,19 @@ type TCatalogueGridProps = {
 };
 
 export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) {
-  const { filtered, products, setProduct, visibleCount } = useCatalogueStore();
+  const { filteredProduct, products, setProduct, visibleCount } = useCatalogueStore();
 
   useEffect(() => {
-    if (products.length === 0) setProduct(initialProducts);
+    if (products.length === 0) {
+      setProduct(initialProducts);
+    }
   }, [initialProducts, products, setProduct]);
 
   return (
     <>
       <div className="text-center max-w-2xl mx-auto">
         <h2 className="font-bold">
-          Showing 1-{visibleCount()} of {filtered.length} items
+          Showing 1-{visibleCount()} of {products.length} items
         </h2>
         <p className="mt-2 text-gray-400">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem magnam esse,
@@ -50,7 +52,7 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
             justify-items-center
           "
       >
-        {filtered.map((product, index) => (
+        {filteredProduct.map((product, index) => (
           <div key={index}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

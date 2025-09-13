@@ -3,33 +3,39 @@ import { create } from "zustand";
 
 type StoreProduct = {
   products: TProduct[];
-  filtered: TProduct[];
+  filteredProduct: TProduct[];
   search: string;
   currentPage: number;
   itemsPerPage: number;
   visibleCount: () => number;
   setProduct: (product: TProduct[]) => void;
   setSearch: (query: string) => void;
+  addProducts: (product: TProduct[]) => void;
 };
 
 export const useCatalogueStore = create<StoreProduct>((set, get) => ({
   products: [],
-  filtered: [],
+  filteredProduct: [],
   search: "",
   currentPage: 1,
   itemsPerPage: 9,
-  visibleCount: () =>
-    Math.min(get().filtered.length, get().currentPage * get().itemsPerPage),
+  visibleCount: () => get().filteredProduct.length,
 
-  setProduct: products => set({ products, filtered: products }),
+  addProducts: newProducts =>
+    set(state => ({
+      filteredProduct: [...state.filteredProduct, ...newProducts],
+      currentPage: state.currentPage + 1,
+    })),
+
+  setProduct: products => set({ products, filteredProduct: products.slice(0, 9) }),
   setSearch: query =>
     set(state => {
       if (!query.trim()) {
-        return { search: "", filtered: state.products };
+        return { search: "", filteredProduct: state.products };
       }
       return {
         search: query,
-        filtered: state.products.filter(p =>
+        filteredProduct: state.products.filter(p =>
           p.name.toLowerCase().includes(query.toLowerCase())
         ),
       };

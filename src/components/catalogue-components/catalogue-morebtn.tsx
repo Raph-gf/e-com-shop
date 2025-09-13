@@ -5,9 +5,25 @@ import { Button } from "../ui/button";
 import * as motion from "motion/react-client";
 import { Progress } from "../ui/progress";
 import { useCatalogueStore } from "@/store/useCatalogueStore";
+import { getProducts } from "@/actions/actions";
 
 export default function CatalogueMoreBtn() {
-  const { filtered, products, visibleCount } = useCatalogueStore();
+  const {
+    filteredProduct,
+    products,
+    visibleCount,
+    currentPage,
+    itemsPerPage,
+    addProducts,
+  } = useCatalogueStore();
+
+  const loadMoreProduct = async () => {
+    const nextPage = currentPage + 1;
+    const { products: newProducts } = await getProducts(nextPage, itemsPerPage);
+    if (!newProducts || newProducts.length === 0) return;
+
+    addProducts(newProducts);
+  };
 
   return (
     <section>
@@ -22,11 +38,25 @@ export default function CatalogueMoreBtn() {
         </p>
         <Progress
           className="max-w-3xl h-0.5 mt-5"
-          value={(visibleCount() / filtered.length) * 100}
+          value={
+            filteredProduct.length > 0
+              ? Math.min((visibleCount() / products.length) * 100, 100)
+              : 0
+          }
         />
 
-        <Button className="mt-5">
-          Load more <ChevronRightIcon />
+        <Button
+          className="mt-5"
+          onClick={loadMoreProduct}
+          disabled={products.length === visibleCount()}
+        >
+          {products.length === visibleCount() ? (
+            "All products are displayed"
+          ) : (
+            <>
+              Load more <ChevronRightIcon />
+            </>
+          )}
         </Button>
       </motion.div>
     </section>
