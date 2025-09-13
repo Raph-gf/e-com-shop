@@ -12,7 +12,10 @@ type TCatalogueGridProps = {
 };
 
 export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) {
-  const { filteredProduct, products, setProduct, visibleCount } = useCatalogueStore();
+  const { filteredProduct, products, setProduct, visibleCount, search } =
+    useCatalogueStore();
+
+  const totalItems = search ? filteredProduct.length : products.length;
 
   useEffect(() => {
     if (products.length === 0) {
@@ -24,7 +27,7 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
     <>
       <div className="text-center max-w-2xl mx-auto">
         <h2 className="font-bold">
-          Showing 1-{visibleCount()} of {products.length} items
+          Showing 1-{visibleCount()} of {totalItems} items
         </h2>
         <p className="mt-2 text-gray-400">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem magnam esse,

@@ -15,6 +15,7 @@ export default function CatalogueMoreBtn() {
     currentPage,
     itemsPerPage,
     addProducts,
+    search,
   } = useCatalogueStore();
 
   const loadMoreProduct = async () => {
@@ -25,6 +26,8 @@ export default function CatalogueMoreBtn() {
     addProducts(newProducts);
   };
 
+  const totalItems = search ? filteredProduct.length : products.length;
+
   return (
     <section>
       <motion.div
@@ -34,13 +37,13 @@ export default function CatalogueMoreBtn() {
         className=" flex flex-col justify-center items-center mt-50 text-black"
       >
         <p>
-          Showing 1-{visibleCount()} of {products.length} items
+          Showing 1-{visibleCount()} of {totalItems} items
         </p>
         <Progress
           className="max-w-3xl h-0.5 mt-5"
           value={
             filteredProduct.length > 0
-              ? Math.min((visibleCount() / products.length) * 100, 100)
+              ? Math.min((visibleCount() / totalItems) * 100, 100)
               : 0
           }
         />
@@ -48,9 +51,9 @@ export default function CatalogueMoreBtn() {
         <Button
           className="mt-5"
           onClick={loadMoreProduct}
-          disabled={products.length === visibleCount()}
+          disabled={totalItems === visibleCount()}
         >
-          {products.length === visibleCount() ? (
+          {totalItems === visibleCount() ? (
             "All products are displayed"
           ) : (
             <>

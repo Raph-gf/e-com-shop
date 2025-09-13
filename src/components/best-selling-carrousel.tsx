@@ -18,7 +18,7 @@ type TBestProductProps = {
 
 export default function Carrousel({ bestProduct }: TBestProductProps) {
   return (
-    <Carousel>
+    <Carousel className="w-full">
       <CarouselContent>
         {bestProduct.map((product, index) => (
           <CarouselItem
@@ -42,7 +42,7 @@ type TBestProductCardProps = {
 
 function ProductCard({ product }: TBestProductCardProps) {
   return (
-    <Card className=" h-[550px] shadow-xl rounded-2xl overflow-hidden border-none">
+    <Card className="h-[550px] shadow-xl rounded-2xl overflow-hidden border-none">
       <CardHeader className="p-0">
         <div className="relative h-[350px]">
           <Image
@@ -55,8 +55,8 @@ function ProductCard({ product }: TBestProductCardProps) {
       </CardHeader>
 
       <CardContent className="px-5 py-4">
-        <div className="max-w-[250px]">
-          <p className="text-sm text-[#8D8D8D] mb-1">{product.type}</p>
+        <div className="max-w-[350px]">
+          <p className="text-sm text-[#8D8D8D] mb-3">{product.type}</p>
           <p className="text-[20px] mb-2">{product.name}</p>
           <StarRating rating={product.avgRating} />
         </div>
