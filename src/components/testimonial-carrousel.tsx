@@ -65,8 +65,8 @@ export default function TestimonialCarrousel() {
           <TestimonialCard />
         </CarouselItem>
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="absolute top-1/2 -left-2 w-15 h-13 -translate-y-1/2 z-20" />
+      <CarouselNext className="absolute top-1/2 -right-2 w-15 h-13 -translate-y-1/2 z-20" />
     </Carousel>
   );
 }
