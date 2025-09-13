@@ -51,7 +51,7 @@ export default function CatalogueMoreBtn() {
         <Button
           className="mt-5"
           onClick={loadMoreProduct}
-          disabled={totalItems === visibleCount()}
+          disabled={totalItems === visibleCount() || filteredProduct.length === 0}
         >
           {totalItems === visibleCount() ? (
             "All products are displayed"
