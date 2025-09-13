@@ -8,11 +8,14 @@ type StoreProduct = {
   currentPage: number;
   itemsPerPage: number;
   hasLoadedMore: boolean;
+  priceRange: [number, number];
 
+  setPriceRange: (range: [number, number]) => void;
   visibleCount: () => number;
   setProduct: (product: TProduct[]) => void;
   setSearch: (query: string) => void;
   addProducts: (product: TProduct[]) => void;
+  applyFilters: () => void;
 };
 
 export const useCatalogueStore = create<StoreProduct>((set, get) => ({
@@ -22,6 +25,7 @@ export const useCatalogueStore = create<StoreProduct>((set, get) => ({
   currentPage: 1,
   hasLoadedMore: false,
   itemsPerPage: 9,
+  priceRange: [0, 1000],
 
   visibleCount: () => get().filteredProduct.length,
 
@@ -38,19 +42,35 @@ export const useCatalogueStore = create<StoreProduct>((set, get) => ({
       filteredProduct: products.slice(0, state.itemsPerPage),
     })),
 
-  setSearch: query =>
-    set(state => {
-      if (!query.trim()) {
-        const restoredProducts = state.hasLoadedMore
-          ? state.products
-          : state.products.slice(0, state.itemsPerPage);
-        return { search: "", filteredProduct: restoredProducts };
-      }
-      return {
-        search: query,
-        filteredProduct: state.products
-          .slice(0, state.currentPage * state.itemsPerPage)
-          .filter(p => p.name.toLowerCase().includes(query.toLowerCase())),
-      };
-    }),
+  setSearch: query => {
+    set({ search: query });
+
+    get().applyFilters();
+  },
+
+  setPriceRange: range => {
+    set({ priceRange: range });
+
+    get().applyFilters();
+  },
+
+  applyFilters: () => {
+    const { products, search, priceRange, itemsPerPage, hasLoadedMore } = get();
+
+    let filtered = products;
+
+    if (search.trim()) {
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    filtered = filtered.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
+
+    if (!hasLoadedMore) {
+      filtered = filtered.slice(0, itemsPerPage);
+    }
+
+    set({ filteredProduct: filtered });
+  },
 }));
