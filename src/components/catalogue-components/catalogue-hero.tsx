@@ -24,7 +24,7 @@ export default function CataloguePageHero() {
         transition={{ duration: 0.7, delay: 0.1 }}
         className="w-full absolute z-10 text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  backdrop-blur-[0.8px]  p-8 rounded-xl border-none"
       >
-        <div className="h-[300px]">
+        <div className="px-16 h-[300px]">
           <div className="text-7xl text-white text-center mb-4 flex flex-col gap-y-6">
             <h1>Search For Your Favorite Interior</h1>
             <span className="text-5xl">Minimalist & Modern Furnitures</span>
