@@ -1,7 +1,12 @@
+"use client";
+
 import * as motion from "motion/react-client";
 import { Input } from "../ui/input";
+import { useCatalogueStore } from "@/store/useCatalogueStore";
 
 export default function CatalogueSearch() {
+  const { search, setSearch } = useCatalogueStore();
+
   return (
     <section>
       <motion.div
@@ -12,7 +17,12 @@ export default function CatalogueSearch() {
       >
         <h1 className="text-[70px] mt-20 mb-10 text-center">Our Collection of Product</h1>
         <div className="flex justify-center">
-          <Input className="w-full max-w-[950px] rounded-2xl" placeholder="Search..." />
+          <Input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full max-w-[950px] rounded-2xl"
+            placeholder="Search..."
+          />
         </div>
       </motion.div>
     </section>

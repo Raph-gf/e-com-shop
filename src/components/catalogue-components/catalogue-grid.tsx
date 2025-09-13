@@ -12,7 +12,7 @@ type TCatalogueGridProps = {
 };
 
 export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) {
-  const { products, setProduct } = useCatalogueStore();
+  const { filtered, products, setProduct, visibleCount } = useCatalogueStore();
 
   useEffect(() => {
     if (products.length === 0) setProduct(initialProducts);
@@ -21,7 +21,9 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
   return (
     <>
       <div className="text-center max-w-2xl mx-auto">
-        <h2 className="font-bold">Showing 1-12 of 24 items</h2>
+        <h2 className="font-bold">
+          Showing 1-{visibleCount()} of {filtered.length} items
+        </h2>
         <p className="mt-2 text-gray-400">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem magnam esse,
           rem praesentium quod natus numquam?
@@ -48,7 +50,7 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
             justify-items-center
           "
       >
-        {products.map((product, index) => (
+        {filtered.map((product, index) => (
           <div key={index}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -57,7 +59,7 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
               whileHover={{ scale: 1.003 }}
               whileTap={{ scale: 0.95 }}
             >
-              <CatalogueCard product={product} />
+              <CatalogueCard key={product.id} product={product} />
             </motion.div>
           </div>
         ))}

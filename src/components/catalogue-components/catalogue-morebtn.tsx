@@ -1,9 +1,14 @@
+"use client";
+
 import { ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import * as motion from "motion/react-client";
 import { Progress } from "../ui/progress";
+import { useCatalogueStore } from "@/store/useCatalogueStore";
 
 export default function CatalogueMoreBtn() {
+  const { filtered, products, visibleCount } = useCatalogueStore();
+
   return (
     <section>
       <motion.div
@@ -12,8 +17,13 @@ export default function CatalogueMoreBtn() {
         transition={{ duration: 0.5, delay: 0.1 }}
         className=" flex flex-col justify-center items-center mt-50 text-black"
       >
-        <p>Showing 1-12 of 24 items</p>
-        <Progress className="max-w-3xl h-0.5 mt-5" value={33} />
+        <p>
+          Showing 1-{visibleCount()} of {products.length} items
+        </p>
+        <Progress
+          className="max-w-3xl h-0.5 mt-5"
+          value={(visibleCount() / filtered.length) * 100}
+        />
 
         <Button className="mt-5">
           Load more <ChevronRightIcon />
