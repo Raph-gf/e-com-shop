@@ -15,7 +15,7 @@ export default function CatalogueGrid({ initialProducts }: TCatalogueGridProps) 
   const { filteredProduct, products, setProduct, visibleCount, search } =
     useCatalogueStore();
 
-  const totalItems = search ? filteredProduct.length : products.length;
+  const totalItems = search !== "" ? filteredProduct.length : products.length;
 
   useEffect(() => {
     if (products.length === 0) {

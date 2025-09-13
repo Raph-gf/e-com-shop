@@ -16,17 +16,22 @@ export default function CatalogueMoreBtn() {
     itemsPerPage,
     addProducts,
     search,
+    priceRange,
   } = useCatalogueStore();
+
+  const totalItems =
+    search || priceRange[0] > 0 || priceRange[1] < 1000
+      ? filteredProduct.length
+      : products.length;
 
   const loadMoreProduct = async () => {
     const nextPage = currentPage + 1;
-    const { products: newProducts } = await getProducts(nextPage, itemsPerPage);
-    if (!newProducts || newProducts.length === 0) return;
+    const { products: filteredProduct } = await getProducts(nextPage, itemsPerPage);
+    console.log(filteredProduct);
 
-    addProducts(newProducts);
+    if (!filteredProduct || filteredProduct.length === 0) return;
+    addProducts(filteredProduct);
   };
-
-  const totalItems = search ? filteredProduct.length : products.length;
 
   return (
     <section>
@@ -51,7 +56,7 @@ export default function CatalogueMoreBtn() {
         <Button
           className="mt-5"
           onClick={loadMoreProduct}
-          disabled={totalItems === visibleCount() || filteredProduct.length === 0}
+          disabled={visibleCount() === totalItems}
         >
           {totalItems === visibleCount() ? (
             "All products are displayed"

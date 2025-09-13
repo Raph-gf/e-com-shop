@@ -15,7 +15,9 @@ export default async function CataloguePage() {
 
       <CatalogueSearch />
 
-      <CatalogueGrid initialProducts={products} />
+      <section className="mt-10 px-5 text-black max-w-[1440px] mx-auto">
+        <CatalogueGrid initialProducts={products} />
+      </section>
 
       <CatalogueMoreBtn />
     </main>

@@ -15,7 +15,7 @@ export default function PriceSlider() {
       <Slider.Root
         className="relative flex items-center w-64 h-5 select-none touch-none"
         defaultValue={priceRange}
-        max={800}
+        max={1000}
         step={1}
         onValueChange={handleSliderChange}
       >
