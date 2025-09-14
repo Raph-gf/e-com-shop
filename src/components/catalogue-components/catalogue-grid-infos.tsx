@@ -2,13 +2,10 @@ import { TProduct } from "@/types/product-type";
 
 type Props = {
   filteredTotalProducts: number;
-  filteredProducts: TProduct[];
+  filteredProducts?: TProduct[];
 };
 
-export default function CatalogueGridInfos({
-  filteredTotalProducts,
-  filteredProducts,
-}: Props) {
+export default function CatalogueGridInfos({ filteredTotalProducts }: Props) {
   return (
     <div className="text-center max-w-2xl mx-auto">
       <h2 className="font-bold">
