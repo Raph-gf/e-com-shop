@@ -75,7 +75,7 @@ export default function CatalogueGrid({
       }
     };
     loading();
-  }, [inView]);
+  }, [inView, filteredProducts.length, filteredTotalProducts]);
 
   return (
     <section className="mt-10 px-5 text-black max-w-[1440px] mx-auto">
