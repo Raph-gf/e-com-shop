@@ -22,7 +22,7 @@ export default function CatalogueInfiniteScroll({
         className=" flex flex-col justify-center items-center mt-50 text-black"
       >
         <p>
-          Showing 1-{filteredProducts.length} of {filteredTotalProducts} items
+          Showing 1-{filteredTotalProducts} of {filteredTotalProducts} items
         </p>
 
         <Progress

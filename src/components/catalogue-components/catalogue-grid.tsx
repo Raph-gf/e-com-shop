@@ -43,14 +43,13 @@ export default function CatalogueGrid({
 
   useEffect(() => {
     setCurrentPage(1);
-    setFilteredProducts([]);
   }, [search, priceRange]);
 
   useEffect(() => {
     const fetchFilteredProducts = async () => {
       setIsLoadingInfinite(true);
 
-      await sleep(700);
+      await sleep(300);
       const { products, totalProducts } = await getProducts(currentPage, 9, {
         priceRange: debouncedPriceRange,
         search: debouncedSearch,
@@ -75,15 +74,15 @@ export default function CatalogueGrid({
       }
     };
     loading();
-  }, [inView, filteredProducts.length, filteredTotalProducts]);
+  }, [inView]);
 
   return (
     <section className="mt-10 px-5 text-black max-w-[1440px] mx-auto">
       <CatalogueSearch search={search} setSearch={setSearch} />
 
       <CatalogueGridInfos
-        filteredProducts={filteredProducts}
         filteredTotalProducts={filteredTotalProducts}
+        filteredProducts={filteredProducts}
       />
 
       <PriceSlider priceRange={priceRange} setPriceRange={setPriceRange} />
