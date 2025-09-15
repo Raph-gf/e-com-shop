@@ -15,7 +15,7 @@ export default function Navbar({ className }: { className?: string }) {
       </Link>
       <ul className="flex gap-12">
         <li>Furniture</li>
-        <Link href="/products">
+        <Link href="/products?page=1">
           <li>Shop</li>
         </Link>
         <li>About us</li>

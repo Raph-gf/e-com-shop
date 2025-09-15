@@ -2,13 +2,15 @@
 
 import * as motion from "motion/react-client";
 import { Input } from "../ui/input";
-import { useCatalogueStore } from "@/store/useCatalogueStore";
 
-export default function CatalogueSearch() {
-  const { search, setSearch } = useCatalogueStore();
+type Props = {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+};
 
+export default function CatalogueSearch({ search, setSearch }: Props) {
   return (
-    <section>
+    <section className="mb-10">
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
