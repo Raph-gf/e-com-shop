@@ -7,15 +7,22 @@ type CataloguePageProps = {
 };
 
 export default async function CataloguePage({ searchParams }: CataloguePageProps) {
-  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const pageParam = await searchParams?.page;
+  const page = pageParam ? parseInt(pageParam) : 1;
   const productPerPages = 9;
-  const { products, totalProducts } = await getProducts(page, productPerPages);
-
+  const { products, totalProducts, highestPrice } = await getProducts(
+    page,
+    productPerPages
+  );
   return (
     <main>
       <CataloguePageHero />
 
-      <CatalogueGrid initialProducts={products} totalProducts={totalProducts} />
+      <CatalogueGrid
+        initialProducts={products}
+        totalProducts={totalProducts}
+        highestPrice={highestPrice ?? 0}
+      />
     </main>
   );
 }

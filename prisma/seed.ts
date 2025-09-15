@@ -167,40 +167,170 @@ const products = [
     avgRating: 4.0,
   },
   {
-    name: "Oak Dining Chair",
-    type: "Chair",
-    price: 150,
-    description: "Elegant dining chair in oak wood, minimalist design.",
+    name: "Industrial Bookshelf",
+    type: "Shelf",
+    price: 300,
+    description:
+      "Open-frame bookshelf with industrial design, perfect for modern interiors.",
     images: {
       create: [
         {
-          url: "https://images.unsplash.com/photo-1701421047895-1dc3908c3268?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          url: "https://images.unsplash.com/photo-1528208079124-a2387f039c99?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           isMain: true,
         },
         {
-          url: "https://images.unsplash.com/photo-1701421047999-eacdc479e8bd?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          url: "https://images.unsplash.com/photo-1549187774-b4e9b0445b06?q=80&w=2000&auto=format&fit=crop",
         },
       ],
     },
-    avgRating: 4.0,
+    avgRating: 4.3,
   },
   {
-    name: "Oak Dining Chair",
+    name: "Velvet Armchair",
     type: "Chair",
-    price: 150,
-    description: "Elegant dining chair in oak wood, minimalist design.",
+    price: 220,
+    description:
+      "Luxurious velvet armchair with golden legs, adding elegance to any room.",
     images: {
       create: [
         {
-          url: "https://images.unsplash.com/photo-1701421047895-1dc3908c3268?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          url: "https://images.unsplash.com/photo-1708696415488-75a60df6f92a?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           isMain: true,
         },
         {
-          url: "https://images.unsplash.com/photo-1701421047999-eacdc479e8bd?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          url: "https://images.unsplash.com/photo-1600585154526-990dced4dbf2?q=80&w=2000&auto=format&fit=crop",
         },
       ],
     },
-    avgRating: 4.0,
+    avgRating: 4.6,
+  },
+  {
+    name: "Glass Coffee Table",
+    type: "Table",
+    price: 270,
+    description: "Round glass coffee table with chrome legs, sleek and modern design.",
+    images: {
+      create: [
+        {
+          url: "https://plus.unsplash.com/premium_photo-1676823570977-18ee08fea6c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.2,
+  },
+  {
+    name: "Modern Wardrobe",
+    type: "Wardrobe",
+    price: 950,
+    description: "Spacious wardrobe with sliding doors and a clean, modern finish.",
+    images: {
+      create: [
+        {
+          url: "https://images.unsplash.com/photo-1672137233327-37b0c1049e77?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1600585154271-990dced4dbf2?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.5,
+  },
+  {
+    name: "Hanging Pendant Lamp",
+    type: "Lamp",
+    price: 140,
+    description:
+      "Elegant pendant lamp with warm glow, ideal for dining areas or kitchens.",
+    images: {
+      create: [
+        {
+          url: "https://plus.unsplash.com/premium_photo-1705582800047-1aacf1e0f0ba?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1600566754593-3b0e5e64c8f0?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.1,
+  },
+  {
+    name: "Classic Wooden Bed",
+    type: "Bed",
+    price: 1100,
+    description: "King-size wooden bed with natural oak finish and strong frame.",
+    images: {
+      create: [
+        {
+          url: "https://images.unsplash.com/photo-1633948393301-d43e3ec0e5cd?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1505692952065-1758d7feb511?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.7,
+  },
+  {
+    name: "Leather Recliner Sofa",
+    type: "Sofa",
+    price: 1200,
+    description:
+      "Premium leather recliner sofa with adjustable seats for maximum comfort.",
+    images: {
+      create: [
+        {
+          url: "https://images.unsplash.com/photo-1616873424982-e406f6af8eef?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1549187776-b4e9b0445b06?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.8,
+  },
+  {
+    name: "Nightstand",
+    type: "Table",
+    price: 180,
+    description: "Eco-friendly nightstand with drawer, simple and sustainable design.",
+    images: {
+      create: [
+        {
+          url: "https://plus.unsplash.com/premium_photo-1676823570572-966ea4c0e333?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1600585154278-990dced4dbf2?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.4,
+  },
+  {
+    name: "Round Dining Table",
+    type: "Table",
+    price: 600,
+    description: "Round dining table with marble top and sturdy wood base.",
+    images: {
+      create: [
+        {
+          url: "https://plus.unsplash.com/premium_photo-1675744019096-a8dd642b0f9b?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          isMain: true,
+        },
+        {
+          url: "https://images.unsplash.com/photo-1549187773-b4e9b0445b06?q=80&w=2000&auto=format&fit=crop",
+        },
+      ],
+    },
+    avgRating: 4.6,
   },
 ];
 

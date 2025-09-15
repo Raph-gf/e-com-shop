@@ -30,7 +30,13 @@ export async function getProducts(
     where,
   });
 
-  console.log(totalProducts, products);
+  const result = await prisma.product.aggregate({
+    _max: {
+      price: true,
+    },
+  });
 
-  return { totalProducts, products };
+  const highestPrice = result._max.price;
+
+  return { totalProducts, products, highestPrice };
 }

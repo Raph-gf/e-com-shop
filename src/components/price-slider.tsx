@@ -1,16 +1,30 @@
 "use client";
 
+import { TProduct } from "@/types/product-type";
 import * as Slider from "@radix-ui/react-slider";
 import { useState } from "react";
 
 type PriceSliderProps = {
   priceRange: [number, number];
   setPriceRange: React.Dispatch<React.SetStateAction<[number, number]>>;
+  highestPrice: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setFilteredProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
 };
 
-export default function PriceSlider({ priceRange, setPriceRange }: PriceSliderProps) {
+export default function PriceSlider({
+  priceRange,
+  setPriceRange,
+  highestPrice,
+  setCurrentPage,
+  setFilteredProducts,
+}: PriceSliderProps) {
   const handleSliderChange = (values: number[]) => {
     setPriceRange([values[0], values[1]]);
+    if (values[0] === 0 && values[1] === highestPrice) {
+      setCurrentPage(1);
+      setFilteredProducts([]);
+    }
   };
 
   return (
@@ -20,8 +34,8 @@ export default function PriceSlider({ priceRange, setPriceRange }: PriceSliderPr
       <Slider.Root
         className="relative flex items-center w-64 h-5 select-none touch-none"
         defaultValue={priceRange}
-        max={1000}
-        step={50}
+        max={highestPrice}
+        step={100}
         onValueChange={handleSliderChange}
       >
         <Slider.Track className=" bg-gray-300 relative flex-1 h-1 rounded-full">
