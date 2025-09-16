@@ -25,7 +25,7 @@ export default function CatalogueInfiniteScroll({
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="flex flex-col justify-center items-center mt-30 text-black"
+        className="flex flex-col justify-center items-center mt-20 text-black"
       >
         <p>
           Showing {start}-{end} of {TotalShownedProducts} items

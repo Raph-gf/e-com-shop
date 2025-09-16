@@ -24,6 +24,9 @@ export async function getProducts(
     skip: (page - 1) * productPerPages,
     take: productPerPages,
     include: { images: true },
+    orderBy: {
+      id: "asc",
+    },
   });
 
   const totalProducts = await prisma.product.count({
