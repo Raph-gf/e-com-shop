@@ -8,13 +8,12 @@ import CatalogueGridInfos from "./catalogue-grid-infos";
 import CatalogueInfiniteScroll from "./catalogue-infinite-scroll";
 import NoProduct from "../no-product";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TProduct } from "@/types/product-type";
-import { getProducts } from "@/actions/actions";
+import { getProductsCached } from "@/actions/actions";
 import { useInView } from "react-intersection-observer";
 import { Bars } from "../ui/shadcn-io/spinner";
-import { sleep } from "@/lib/utils";
 import { useDebounce } from "@/hooks/custom-hooks";
 
 type TCatalogueGridProps = {
@@ -31,137 +30,134 @@ export default function CatalogueGrid({
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // pagination
   const [currentPage, setCurrentPage] = useState<number>(() => {
     const pageParam = searchParams.get("page");
     return pageParam ? parseInt(pageParam, 10) : 1;
   });
 
+  // filtres
   const [priceRange, setPriceRange] = useState<[number, number]>([0, highestPrice]);
   const [search, setSearch] = useState<string>("");
 
-  const [productsState, setProductsState] = useState<{
-    allProducts: TProduct[];
-    filteredProducts: TProduct[];
-    TotalProducts: number;
-  }>({
-    allProducts: initialProducts,
-    filteredProducts: initialProducts,
-    TotalProducts: totalProducts,
-  });
+  // produits
+  const [products, setProducts] = useState<TProduct[]>(initialProducts);
 
-  const [infiniteScrolling, setInfiniteScrolling] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingInfinite, setIsLoadingInfinite] = useState(false);
+  const [totalCount, setTotalCount] = useState<number>(totalProducts);
 
-  const debouncedSearch = useDebounce(search, 200);
-  const debouncedPriceRange = useDebounce(priceRange, 200);
+  // loading states
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false); // Pour infinite scroll
+  const [isLoadingFilters, setIsLoadingFilters] = useState<boolean>(false); // Pour filtres
 
-  const isFiltering =
-    search !== "" || priceRange[0] !== 0 || priceRange[1] !== highestPrice;
+  // debounces
+  const debouncedSearch = useDebounce(search, 600);
+  const debouncedPriceRange = useDebounce(priceRange, 700);
 
-  const productToShow = isFiltering
-    ? productsState.filteredProducts
-    : productsState.allProducts;
+  // slider handler
+  const handleSliderChange = (values: number[]) => {
+    setPriceRange([values[0], values[1]]);
+  };
 
-  const { ref, inView } = useInView({
+  // products handler avec loading states séparés
+  const fetchProducts = useCallback(
+    async (page: number, shouldReset = false) => {
+      if (shouldReset) {
+        setIsLoadingFilters(true);
+      } else {
+        setIsLoadingMore(true);
+      }
+
+      try {
+        const { products: newProducts, totalProducts } = await getProductsCached(
+          page,
+          9,
+          {
+            search: debouncedSearch,
+            priceRange: debouncedPriceRange,
+          }
+        );
+
+        setProducts(prev => (shouldReset ? newProducts : [...prev, ...newProducts]));
+
+        setTotalCount(totalProducts);
+      } catch (error) {
+        console.error("Erreur:", error);
+      } finally {
+        setIsLoadingFilters(false);
+        setIsLoadingMore(false);
+      }
+    },
+    [debouncedSearch, debouncedPriceRange]
+  );
+
+  // mise à jour URL
+  useEffect(() => {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    params.set("search", debouncedSearch);
+    params.set("minPrice", debouncedPriceRange[0].toString());
+    params.set("maxPrice", debouncedPriceRange[1].toString());
+    params.set("page", currentPage.toString());
+
+    router.replace(`/products?${params.toString()}`, { scroll: false });
+  }, [currentPage, debouncedPriceRange, debouncedSearch]);
+
+  // fetch produits
+  useEffect(() => {
+    setCurrentPage(1);
+    fetchProducts(1, true);
+  }, [debouncedSearch, debouncedPriceRange]);
+
+  // infinite scroll
+  const { ref } = useInView({
     threshold: 0,
-    triggerOnce: false,
-    skip: productToShow.length >= productsState.TotalProducts,
-    onChange: visible => {
-      if (visible && !infiniteScrolling) {
-        setInfiniteScrolling(true);
-        setCurrentPage(prev => prev + 1);
+    rootMargin: "400px",
+    skip: isLoadingMore || isLoadingFilters || products.length >= totalCount,
+    onChange: async visible => {
+      if (
+        visible &&
+        !isLoadingMore &&
+        !isLoadingFilters &&
+        products.length < totalCount
+      ) {
+        const nextPage = currentPage + 1;
+        setCurrentPage(nextPage);
+        await fetchProducts(nextPage, false);
       }
     },
   });
-
-  useEffect(() => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
-    params.set("search", search);
-    params.set("minPrice", priceRange[0].toString());
-    params.set("maxPrice", priceRange[1].toString());
-    params.set("page", currentPage.toString());
-    router.replace(`/products?${params.toString()}`, { scroll: false });
-  }, [currentPage, search, priceRange]);
-
-  useEffect(() => {
-    if (isFiltering) {
-      setCurrentPage(1);
-      setProductsState(prev => ({
-        ...prev,
-        filteredProducts: [],
-      }));
-    }
-  }, [debouncedSearch, debouncedPriceRange, isFiltering]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoadingInfinite(true);
-
-      if (productToShow.length >= productsState.TotalProducts) return;
-
-      const { products, totalProducts } = await getProducts(currentPage, 9, {
-        priceRange,
-        search: debouncedSearch,
-      });
-
-      if (isFiltering) {
-        setProductsState(prev => ({
-          ...prev,
-          filteredProducts:
-            currentPage === 1 ? products : [...prev.filteredProducts, ...products],
-          TotalProducts: totalProducts,
-        }));
-      } else {
-        if (infiniteScrolling) {
-          setProductsState(prev => ({
-            ...prev,
-            allProducts:
-              currentPage === 1 ? products : [...prev.allProducts, ...products],
-            TotalProducts: totalProducts,
-          }));
-        }
-      }
-
-      setIsLoadingInfinite(false);
-      setInfiniteScrolling(false);
-    };
-
-    fetchProducts();
-  }, [currentPage, debouncedPriceRange, debouncedSearch]);
 
   return (
     <section className="mt-10 px-5 text-black max-w-[1440px] mx-auto">
       <CatalogueSearch search={search} setSearch={setSearch} />
 
-      <CatalogueGridInfos
-        filteredProducts={productToShow}
-        TotalShownedProducts={productsState.TotalProducts}
-      />
+      <CatalogueGridInfos filteredProducts={products} TotalShownedProducts={totalCount} />
 
       <PriceSlider
         priceRange={priceRange}
+        handleSliderChange={handleSliderChange}
         setPriceRange={setPriceRange}
         highestPrice={highestPrice}
         setCurrentPage={setCurrentPage}
-        setFilteredProducts={filteredProductsArray =>
-          setProductsState(prev => ({
-            ...prev,
-            filteredProducts: Array.isArray(filteredProductsArray)
-              ? filteredProductsArray
-              : prev.filteredProducts,
-          }))
-        }
+        setProducts={setProducts}
       />
 
-      {isLoading && <Bars />}
-      {!isLoading || (productsState.filteredProducts.length === 0 && <NoProduct />)}
+      {!isLoadingFilters && products.length === 0 && (
+        <div className="mt-10 mb-10">
+          <NoProduct />
+        </div>
+      )}
 
-      {!isLoading && productsState.filteredProducts.length > 0 && (
+      {isLoadingFilters && (
+        <div className="flex justify-center items-center mt-20 mb-20">
+          <Bars />
+        </div>
+      )}
+
+      {products.length > 0 && (
         <div className="mt-20 mb-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 justify-items-center">
-          {productToShow.map((product, index) => (
+          {products.map((product, index) => (
             <motion.div
-              key={index}
+              key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -175,12 +171,17 @@ export default function CatalogueGrid({
 
       <div
         ref={ref}
-        className="flex flex-col justify-center items-center mt-30 text-black"
+        className="flex flex-col justify-center items-center mt-10 text-black min-h-[80px]"
       >
-        {isLoadingInfinite && <Bars />}
+        {isLoadingMore && (
+          <div className="flex items-center space-x-2 mt-10">
+            <Bars />
+            <span className="text-sm text-gray-600">Loading products...</span>
+          </div>
+        )}
         <CatalogueInfiniteScroll
-          TotalShownedProducts={productsState.TotalProducts}
-          filteredProducts={productToShow}
+          TotalShownedProducts={totalCount}
+          filteredProducts={products}
         />
       </div>
     </section>

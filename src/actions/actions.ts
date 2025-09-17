@@ -1,14 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { unstable_cache } from "next/cache";
 
-export async function getProducts(
+async function getProducts(
   page: number,
   productPerPages: number = 9,
-  filters?: { search: string; priceRange: [number, number] }
+  filters?: { search?: string; priceRange?: [number, number] }
 ) {
   const where = {
-    // Penser a mettre le mode insensitive lors du switch sur postgresql
     name: filters?.search ? { contains: filters.search } : undefined,
     price: filters?.priceRange
       ? {
@@ -20,23 +20,24 @@ export async function getProducts(
 
   const products = await prisma.product.findMany({
     where,
-
     skip: (page - 1) * productPerPages,
     take: productPerPages,
     include: { images: true },
+    orderBy: { id: "asc" },
   });
 
-  const totalProducts = await prisma.product.count({
-    where,
-  });
+  const totalProducts = await prisma.product.count({ where });
 
   const result = await prisma.product.aggregate({
-    _max: {
-      price: true,
-    },
+    _max: { price: true },
   });
 
   const highestPrice = result._max.price;
 
   return { totalProducts, products, highestPrice };
 }
+
+// Wrap avec unstable_cache
+export const getProductsCached = unstable_cache(getProducts, ["products"], {
+  revalidate: 60,
+});
