@@ -109,7 +109,8 @@ export default function CatalogueGrid({
 
   // infinite scroll
   const { ref } = useInView({
-    threshold: 0.1,
+    threshold: 0,
+    rootMargin: "400px",
     skip: isLoadingMore || isLoadingFilters || products.length >= totalCount,
     onChange: async visible => {
       if (
