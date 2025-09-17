@@ -8,8 +8,8 @@ type PriceSliderProps = {
   setPriceRange: React.Dispatch<React.SetStateAction<[number, number]>>;
   highestPrice: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  setFilteredProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
-  setAllProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
+  setProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
+
   handleSliderChange: (values: number[]) => void;
 };
 
@@ -17,8 +17,7 @@ export default function PriceSlider({
   priceRange,
   setPriceRange,
   setCurrentPage,
-  setFilteredProducts,
-
+  setProducts,
   handleSliderChange,
   highestPrice,
 }: PriceSliderProps) {
@@ -31,15 +30,14 @@ export default function PriceSlider({
         className="relative flex items-center w-64 h-5 select-none touch-none"
         value={priceRange}
         max={highestPrice}
-        step={10}
+        step={100}
         onValueChange={handleSliderChange}
         onValueCommit={values => {
           setPriceRange([values[0], values[1]]);
           setCurrentPage(1);
 
-          // reset complet si on revient à l’intervalle global
           if (values[0] === 0 && values[1] === highestPrice) {
-            setFilteredProducts([]); // on reset côté filtré
+            setProducts([]);
           }
         }}
       >

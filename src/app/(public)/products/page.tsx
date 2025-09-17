@@ -1,4 +1,4 @@
-import { getProducts } from "@/actions/actions";
+import { getProductsCached } from "@/actions/actions";
 import CatalogueGrid from "@/components/catalogue-components/catalogue-grid";
 import CataloguePageHero from "@/components/catalogue-components/catalogue-hero";
 
@@ -12,7 +12,7 @@ export default async function CataloguePage({ searchParams }: CataloguePageProps
   const pageParam = params?.page ? Number(params.page) : 1;
   const page = pageParam ? pageParam : 1;
   const productPerPages = 9;
-  const { products, totalProducts, highestPrice } = await getProducts(
+  const { products, totalProducts, highestPrice } = await getProductsCached(
     page,
     productPerPages
   );

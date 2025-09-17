@@ -8,10 +8,10 @@ import CatalogueGridInfos from "./catalogue-grid-infos";
 import CatalogueInfiniteScroll from "./catalogue-infinite-scroll";
 import NoProduct from "../no-product";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TProduct } from "@/types/product-type";
-import { getProducts } from "@/actions/actions";
+import { getProductsCached } from "@/actions/actions";
 import { useInView } from "react-intersection-observer";
 import { Bars } from "../ui/shadcn-io/spinner";
 import { useDebounce } from "@/hooks/custom-hooks";
@@ -36,17 +36,18 @@ export default function CatalogueGrid({
     return pageParam ? parseInt(pageParam, 10) : 1;
   });
 
-  console.log(currentPage);
   // filtres
   const [priceRange, setPriceRange] = useState<[number, number]>([0, highestPrice]);
   const [search, setSearch] = useState<string>("");
 
   // produits
   const [products, setProducts] = useState<TProduct[]>(initialProducts);
+
   const [totalCount, setTotalCount] = useState<number>(totalProducts);
 
-  // loading
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // loading states
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false); // Pour infinite scroll
+  const [isLoadingFilters, setIsLoadingFilters] = useState<boolean>(false); // Pour filtres
 
   // debounces
   const debouncedSearch = useDebounce(search, 600);
@@ -57,23 +58,33 @@ export default function CatalogueGrid({
     setPriceRange([values[0], values[1]]);
   };
 
-  // products handler
+  // products handler avec loading states séparés
   const fetchProducts = useCallback(
     async (page: number, shouldReset = false) => {
-      setIsLoading(true);
+      if (shouldReset) {
+        setIsLoadingFilters(true);
+      } else {
+        setIsLoadingMore(true);
+      }
 
       try {
-        const { products: newProducts, totalProducts } = await getProducts(page, 9, {
-          search: debouncedSearch,
-          priceRange: debouncedPriceRange,
-        });
+        const { products: newProducts, totalProducts } = await getProductsCached(
+          page,
+          9,
+          {
+            search: debouncedSearch,
+            priceRange: debouncedPriceRange,
+          }
+        );
 
         setProducts(prev => (shouldReset ? newProducts : [...prev, ...newProducts]));
+
         setTotalCount(totalProducts);
       } catch (error) {
         console.error("Erreur:", error);
       } finally {
-        setIsLoading(false);
+        setIsLoadingFilters(false);
+        setIsLoadingMore(false);
       }
     },
     [debouncedSearch, debouncedPriceRange]
@@ -87,11 +98,10 @@ export default function CatalogueGrid({
     params.set("maxPrice", debouncedPriceRange[1].toString());
     params.set("page", currentPage.toString());
 
-    router.push(`/products?${params.toString()}`, { scroll: false });
-  }, [debouncedPriceRange, debouncedSearch]);
+    router.replace(`/products?${params.toString()}`, { scroll: false });
+  }, [currentPage, debouncedPriceRange, debouncedSearch]);
 
   // fetch produits
-
   useEffect(() => {
     setCurrentPage(1);
     fetchProducts(1, true);
@@ -99,14 +109,18 @@ export default function CatalogueGrid({
 
   // infinite scroll
   const { ref } = useInView({
-    threshold: 0.5,
-    triggerOnce: false,
-    skip: isLoading || products.length >= totalCount,
+    threshold: 0.1,
+    skip: isLoadingMore || isLoadingFilters || products.length >= totalCount,
     onChange: async visible => {
-      if (visible && !isLoading && products.length < totalCount) {
+      if (
+        visible &&
+        !isLoadingMore &&
+        !isLoadingFilters &&
+        products.length < totalCount
+      ) {
         const nextPage = currentPage + 1;
-        await fetchProducts(nextPage, false);
         setCurrentPage(nextPage);
+        await fetchProducts(nextPage, false);
       }
     },
   });
@@ -123,22 +137,26 @@ export default function CatalogueGrid({
         setPriceRange={setPriceRange}
         highestPrice={highestPrice}
         setCurrentPage={setCurrentPage}
-        setFilteredProducts={setProducts}
-        setAllProducts={setProducts}
+        setProducts={setProducts}
       />
 
-      {isLoading ||
-        (products.length === 0 && (
-          <div className="mt-10 mb-10">
-            <NoProduct />
-          </div>
-        ))}
+      {!isLoadingFilters && products.length === 0 && (
+        <div className="mt-10 mb-10">
+          <NoProduct />
+        </div>
+      )}
 
-      {!isLoading && products.length > 0 && (
+      {isLoadingFilters && (
+        <div className="flex justify-center items-center mt-20 mb-20">
+          <Bars />
+        </div>
+      )}
+
+      {products.length > 0 && (
         <div className="mt-20 mb-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-6 justify-items-center">
           {products.map((product, index) => (
             <motion.div
-              key={index}
+              key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -152,9 +170,14 @@ export default function CatalogueGrid({
 
       <div
         ref={ref}
-        className="flex flex-col justify-center items-center mt-30 text-black"
+        className="flex flex-col justify-center items-center mt-10 text-black min-h-[80px]"
       >
-        {isLoading && <Bars />}
+        {isLoadingMore && (
+          <div className="flex items-center space-x-2 mt-10">
+            <Bars />
+            <span className="text-sm text-gray-600">Loading products...</span>
+          </div>
+        )}
         <CatalogueInfiniteScroll
           TotalShownedProducts={totalCount}
           filteredProducts={products}
